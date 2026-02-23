@@ -129,3 +129,8 @@ Planned features include:
 
 ## Note
 This README will be updated as NovaScript evolves and new features are added.
+
+Thank you for using NovaScript. 
+If you found this helpful, then make sure to star this repo before you leave.
+
+Ciao😉
