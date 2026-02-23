@@ -26,7 +26,8 @@ The goal of NovaScript is to provide a simple, flexible, and extensible language
 Clone the repository:
 ```
 git clone https://github.com/your-username/novascript.git
-cd novascript```
+cd novascript
+```
 
 ---
 
