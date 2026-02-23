@@ -100,8 +100,9 @@ hensuu sai -> 18
 ---
 
 ## 4.3 Functions and Control Flow
-Currently, NovaScript supports basic if and else statements in language mode.
+Currently, NovaScript supports basic `if` and `else` statements in language mode.
 More advanced control flow features (*like loops*) will be added in future updates.
+
 ---
 
 ## 5. Built-in Functions
