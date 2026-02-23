@@ -49,7 +49,7 @@ python run.py hello_de.nova
 ## 4. Syntax Overview
 
 ## 4.1 Language declaration 
-To use NovaScript, you need to declare which language you're using in each `.nova` file
+To use NovaScript, you must declare the language at the top of each `.nova` file.
 
 Use this to declare the language: 
 ``` 
@@ -59,31 +59,31 @@ use <language_name>
 Example:
 ```
 use german
-// only German code must be written
 ```
+Only that language’s keywords can be used in the file.
 
 ---
 
 ### 4.3 Keywords
 NovaScript currently supports basic keywords and built-in commands.
 
-For Japanese: 
-- hensuu (variable declaration)
-- shutsuryoku (print statement)
-- moshi (if statement)
-- soredehanai (else statement)
+🇯🇵 Japanese: 
+- `hensuu` - variable declaration
+- `shutsuryoku` - print statement
+- `moshi` - if statement
+- `soredehanai` - else statement
 
-For German:
-- zahl (variable declaration)
-- ausgabe (print statement)
-- wenn (if statement)
-- sent (else statement)
+🇩🇪 German:
+- `zahl` - variable declaration
+- `ausgabe` - print statement
+- `wenn` - if statement
+- `sonst` - else statement
 
-For Italian:
-- variabile (variable declaration)
-- stampa (print statement)
-- se (if statement)
-- altrimenti (else statement)
+🇮🇹 Italian:
+- `variabile` - variable declaration
+- `stampa` - print statement
+- `se` - if statement
+- `altrimenti` - else statement
 
 ---
 
