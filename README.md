@@ -88,27 +88,28 @@ NovaScript currently supports basic keywords and built-in commands.
 ---
 
 ## 4.2 Variables
-Variables can be created using a simple assignment syntax, similar, but not the same as Python.
+Variables use a simple assignment style similar to Python, but with a different operator.
+
+NovaScript uses `->` instead of `=`.
 
 Example:
 ```
 hensuu sai -> 18 
-// an arrow is used instead of the traditional equal sign "="
 ```
 
 ---
 
 ## 4.3 Functions and Control Flow
 
-Functions and full Control Flow features are not yet implemented.
-For now you can only use `if...else` statements.
-Other statements will be added in future updates.
+Currently, NovaScript supports basic if and else statements in language mode.
 
+More advanced control flow features (*like loops*) will be added in future updates.
 ---
 
 ## 5. Built-in Functions
-NovaScript currently includes basic built-in functions like the print statement (*in language modes*)
+NovaScript currently includes basic built-in functionality such as the shutsuryok statement (*in English, it's the print function*).
 
+More built-in functions will be added over time.
 ---
 
 ## 6. Examples
@@ -124,13 +125,15 @@ Planned features include:
 - More built-in functions
 - Expanded multi-language support
 - Improved error handling
-- Strings (*you read right...for now NovaScript only supports numbers*)
+- String support (*currently NovaScript only supports numbers*)
 
+---
 
-## Note
+## 📝 Note
 This README will be updated as NovaScript evolves and new features are added.
+Thank you for using NovaScript.
 
-Thank you for using NovaScript. 
-If you found this helpful, then make sure to star this repo before you leave.
+If you find this project interesting, consider starring the repository.
 
-Ciao😉
+
+Ciao 😉
