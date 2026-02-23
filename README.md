@@ -108,8 +108,8 @@ More advanced control flow features (*like loops*) will be added in future updat
 
 ## 5. Built-in Functions
 NovaScript currently includes basic built-in functionality such as the shutsuryok statement (*in English, it's the print function*).
-
 More built-in functions will be added over time.
+
 ---
 
 ## 6. Examples
