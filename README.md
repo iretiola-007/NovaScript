@@ -127,11 +127,11 @@ However, if you directly compare numbers in a statement, you'll get a Boolean re
 Example:
 ```
 use japanese
-shutsuryoku(5 > 1)
+shutsuryoku 5 > 1
 ```
 This would return `True`. Chain comparison is also supported. 
 ### Note: you can compare two values without using parentheses 
-Like in this example above. To do a chain comparison, you must encase values in parentheses as such below:
+Like in the example above. To do a chain comparison, you must encase values in parentheses as such below:
 ```
 use japanese
 shutsuryoku(5 > 2 > 1)
