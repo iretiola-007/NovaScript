@@ -64,7 +64,7 @@ Only that language’s keywords can be used in the file.
 
 ---
 
-### 4.3 Keywords
+### 4.2 Keywords
 Kyvera currently supports basic keywords and built-in commands.
 
 🇯🇵 Japanese: 
@@ -87,7 +87,7 @@ Kyvera currently supports basic keywords and built-in commands.
 
 ---
 
-## 4.2 Variables
+## 4.3 Variables
 Variables use a simple assignment style similar to Python, but with a different operator.
 
 Kyvera uses `->` instead of `=`.
@@ -99,7 +99,7 @@ hensuu sai -> 18
 
 ---
 
-## 4.3 Functions and Control Flow
+## 4.4 Functions and Control Flow
 Currently, Kyvera supports basic `if` and `else` statements in language mode.
 More advanced control flow features (*like loops*) will be added in future updates.
 
