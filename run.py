@@ -1,15 +1,15 @@
 import sys
-from novascript.languages.loader import load_language
-from novascript.core.lexer import Lexer
-from novascript.core.parser import Parser
-from novascript.core.interpreter import Interpreter
+from kyvera.languages.loader import load_language
+from kyvera.core.lexer import Lexer
+from kyvera.core.parser import Parser
+from kyvera.core.interpreter import Interpreter
 
 
 def extract_language(code):
     lines = [line.strip() for line in code.split("\n") if line.strip()]
 
     if not lines[0].startswith("use "):
-        raise Exception("NovaScript requires 'use <language>' at the top.")
+        raise Exception("Kyvera requires 'use <language>' at the top.")
 
     _, lang_name = lines[0].split()
 
