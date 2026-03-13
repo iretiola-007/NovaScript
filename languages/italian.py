@@ -1,12 +1,12 @@
 KEYWORDS = {
     "variabile": "VAR",
     "stampa": "PRINT",
-    "se": "IF",
-    "funzione": "FUNC",
-    "ritorna": "RETURN",
-    "lingua": "LANGUAGE", 
+    "input": "INPUT",         # added for input()
     "se": "IF",
     "altrimenti": "ELSE",
+    "funzione": "FUNC",
+    "ritorna": "RETURN",
+    "lingua": "LANGUAGE",
 }
 
 ERRORS = {
