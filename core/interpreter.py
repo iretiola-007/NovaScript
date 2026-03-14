@@ -1,4 +1,5 @@
-from .ast import NumberNode, BinOpNode, VarAccessNode
+from .ast import NumberNode, StringNode, BinOpNode, VarAccessNode
+
 
 class Interpreter:
     def __init__(self):
@@ -19,18 +20,39 @@ class Interpreter:
     def visit_PrintNode(self, node):
         value = self.evaluate(node.expression)
         print(value)
-    
+
+    def visit_VariableNode(self, node):
+        value = self.evaluate(node.value)
+        self.variables[node.name] = value
+
+    def visit_IfNode(self, node):
+        condition = self.evaluate(node.condition)
+
+        if condition:
+            for stmt in node.body:
+                self.visit(stmt)
+        elif node.else_body:
+            for stmt in node.else_body:
+                self.visit(stmt)
 
     def evaluate(self, node):
+
+        # Numbers
         if isinstance(node, NumberNode):
             return node.value
-            
+
+        # Strings
+        if isinstance(node, StringNode):
+            return node.value
+
+        # Variable access
         if isinstance(node, VarAccessNode):
             if node.name in self.variables:
                 return self.variables[node.name]
             else:
                 raise Exception(f"Undefined variable '{node.name}'")
 
+        # Binary operations
         if isinstance(node, BinOpNode):
             left = self.evaluate(node.left)
             right = self.evaluate(node.right)
@@ -57,17 +79,5 @@ class Interpreter:
                 return left <= right
             elif node.operator == "and":
                 return left and right
-            
-    def visit_VariableNode(self, node):
-        value = self.evaluate(node.value)
-        self.variables[node.name] = value
-        
-    def visit_IfNode(self, node):
-        condition = self.evaluate(node.condition)
 
-        if condition:
-            for stmt in node.body:
-                self.visit(stmt)
-        elif node.else_body:
-            for stmt in node.else_body:
-                self.visit(stmt)
+        raise Exception(f"Cannot evaluate node: {type(node).__name__}")
