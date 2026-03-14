@@ -1,4 +1,12 @@
-from .ast import ProgramNode, VariableNode, PrintNode, NumberNode, BinOpNode, VarAccessNode
+from .ast import (
+    ProgramNode,
+    VariableNode,
+    PrintNode,
+    NumberNode,
+    StringNode,
+    BinOpNode,
+    VarAccessNode,
+)
 
 
 class Parser:
@@ -10,7 +18,7 @@ class Parser:
         statements = []
 
         while self.position < len(self.tokens):
-            token_type, args = self.tokens[self.position]
+            token_type, token_value = self.tokens[self.position]
 
             if token_type == "VAR":
                 statements.append(self.parse_variable())
@@ -18,18 +26,39 @@ class Parser:
             elif token_type == "PRINT":
                 statements.append(self.parse_print())
 
-            self.position += 1
+            else:
+                self.position += 1
 
         return ProgramNode(statements)
 
     def parse_variable(self):
-        args = self.tokens[self.position][1]
-        name = args[0]
+        self.position += 1  # skip VAR
 
-        arrow_index = args.index("->")
-        expression_tokens = args[arrow_index + 1:]
+        token_type, name = self.tokens[self.position]
 
-        expression = self.parse_expression(expression_tokens)
+        if token_type != "IDENTIFIER":
+            raise Exception("Expected variable name")
+
+        self.position += 1
+
+        token_type, arrow = self.tokens[self.position]
+
+        if arrow != "->":
+            raise Exception("Expected '->' in variable declaration")
+
+        self.position += 1
+
+        expr_tokens = []
+
+        while (
+            self.position < len(self.tokens)
+            and self.tokens[self.position][0] != "NEWLINE"
+        ):
+            expr_tokens.append(self.tokens[self.position])
+            self.position += 1
+
+        expression = self.parse_expression(expr_tokens)
+
         return VariableNode(name, expression)
 
     def parse_print(self):
@@ -41,28 +70,24 @@ class Parser:
             self.position < len(self.tokens)
             and self.tokens[self.position][0] != "NEWLINE"
         ):
-            token_type, value = self.tokens[self.position]
-
-            if value is not None:
-                expr_tokens.append(value)
-
+            expr_tokens.append(self.tokens[self.position])
             self.position += 1
 
         return PrintNode(self.parse_expression(expr_tokens))
-    
+
     def parse_expression(self, tokens):
         self.expr_tokens = tokens
         self.expr_pos = 0
         return self.parse_comparison()
-    
+
     def parse_term(self):
         node = self.parse_factor()
 
         while (
             self.expr_pos < len(self.expr_tokens)
-            and self.expr_tokens[self.expr_pos] in ("+", "-")
+            and self.expr_tokens[self.expr_pos][1] in ("+", "-")
         ):
-            op = self.expr_tokens[self.expr_pos]
+            op = self.expr_tokens[self.expr_pos][1]
             self.expr_pos += 1
             right = self.parse_factor()
             node = BinOpNode(node, op, right)
@@ -74,9 +99,9 @@ class Parser:
 
         while (
             self.expr_pos < len(self.expr_tokens)
-            and self.expr_tokens[self.expr_pos] in ("*", "/")
+            and self.expr_tokens[self.expr_pos][1] in ("*", "/")
         ):
-            op = self.expr_tokens[self.expr_pos]
+            op = self.expr_tokens[self.expr_pos][1]
             self.expr_pos += 1
             right = self.parse_atom()
             node = BinOpNode(node, op, right)
@@ -84,24 +109,32 @@ class Parser:
         return node
 
     def parse_atom(self):
-        token = self.expr_tokens[self.expr_pos]
+        token_type, token_value = self.expr_tokens[self.expr_pos]
 
-        if token == "(":
+        # Parentheses
+        if token_value == "(":
             self.expr_pos += 1
-            node = self.parse_comparison()  # FIXED
-            self.expr_pos += 1  # skip ')'
+            node = self.parse_comparison()
+            self.expr_pos += 1
             return node
 
-        if token.isdigit():
+        # Number
+        if token_type == "NUMBER":
             self.expr_pos += 1
-            return NumberNode(int(token))
+            return NumberNode(token_value)
 
-        if token.isidentifier():
+        # String
+        if token_type == "STRING":
             self.expr_pos += 1
-            return VarAccessNode(token)
+            return StringNode(token_value)
 
-        raise Exception(f"Unexpected token: {token}")
-        
+        # Variable access
+        if token_type == "IDENTIFIER":
+            self.expr_pos += 1
+            return VarAccessNode(token_value)
+
+        raise Exception(f"Unexpected token: {token_value}")
+
     def parse_comparison(self):
         left = self.parse_term()
 
@@ -109,19 +142,19 @@ class Parser:
 
         while (
             self.expr_pos < len(self.expr_tokens)
-            and self.expr_tokens[self.expr_pos] in ("==", "!=", ">", "<", ">=", "<=")
+            and self.expr_tokens[self.expr_pos][1]
+            in ("==", "!=", ">", "<", ">=", "<=")
         ):
-            op = self.expr_tokens[self.expr_pos]
+            op = self.expr_tokens[self.expr_pos][1]
             self.expr_pos += 1
             right = self.parse_term()
 
             comparisons.append((left, op, right))
-            left = right  # important for chaining
+            left = right
 
         if not comparisons:
             return left
 
-        # Build chained AND comparisons
         node = BinOpNode(
             comparisons[0][0],
             comparisons[0][1],
@@ -133,4 +166,3 @@ class Parser:
             node = BinOpNode(node, "and", next_node)
 
         return node
-    
