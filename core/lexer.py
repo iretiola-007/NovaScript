@@ -5,61 +5,59 @@ class Lexer:
     def __init__(self, code, keywords):
         self.code = code
         self.keywords = keywords
-
         self.tokens = []
         self.indent_stack = [0]  # Track indentation levels
 
     def tokenize(self):
         lines = self.code.split("\n")
 
-        for raw_line in lines:
-            # Skip completely empty lines
+        for line_number, raw_line in enumerate(lines, start=1):
+
+            # Skip empty lines
             if not raw_line.strip():
                 continue
 
             # Count leading spaces
             indent = len(raw_line) - len(raw_line.lstrip(" "))
 
-            # STRICT: must be multiples of 4
+            # Enforce 4-space indentation
             if indent % 4 != 0:
-                raise Exception("Indentation must be multiples of 4 spaces.")
+                raise Exception(
+                    f"Indentation error on line {line_number}: must use multiples of 4 spaces."
+                )
 
             self.handle_indentation(indent)
 
             line = raw_line.strip()
 
-            # Add spacing around important symbols
-            line = line.replace("==", " == ")
-            line = line.replace("!=", " != ")
-            line = line.replace(">=", " >= ")
-            line = line.replace("<=", " <= ")
-            line = line.replace(">", " > ")
-            line = line.replace("<", " < ")
-            line = line.replace("(", " ( ")
-            line = line.replace(")", " ) ")
-            line = line.replace(":", " : ")
-            line = line.replace("->", " -> ")
+            # Token pattern that correctly captures strings
+            token_pattern = r'"[^"]*"|\d+|==|!=|>=|<=|->|>|<|\(|\)|:|[A-Za-z_]\w*'
 
-            parts = re.split(r"\s+", line)
+            parts = re.findall(token_pattern, line)
 
             for part in parts:
-                if not part:
-                    continue
 
-                # NEWLINE handling
-                if part == "\n":
-                    continue
-
-                # Keywords
+                # Keywords (language packs)
                 if part in self.keywords:
                     self.tokens.append((self.keywords[part], None))
+
+                # Numbers
+                elif part.isdigit():
+                    self.tokens.append(("NUMBER", int(part)))
+
+                # Strings
+                elif part.startswith('"') and part.endswith('"'):
+                    value = part[1:-1]
+                    self.tokens.append(("STRING", value))
+
+                # Identifiers
                 else:
-                    self.tokens.append(("IDENTIFIER_OR_LITERAL", part))
+                    self.tokens.append(("IDENTIFIER", part))
 
             # End of line
             self.tokens.append(("NEWLINE", None))
 
-        # Close remaining blocks
+        # Close remaining indentation blocks
         while len(self.indent_stack) > 1:
             self.indent_stack.pop()
             self.tokens.append(("DEDENT", None))
@@ -77,3 +75,6 @@ class Lexer:
             self.indent_stack.pop()
             current = self.indent_stack[-1]
             self.tokens.append(("DEDENT", None))
+
+        if indent != current:
+            raise Exception("Invalid dedent level.")
