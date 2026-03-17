@@ -1,0 +1,6 @@
+use japanese
+
+
+shutsuryoku("hallo")
+hensuu namae -> "Iretiola"
+shutsuryoku(namae)
