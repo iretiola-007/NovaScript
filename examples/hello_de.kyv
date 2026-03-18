@@ -1,6 +1,6 @@
-use italian
+use german
 
-variabile name -> "Iretiola"
-stampa(name)
-stampa 5 > 1
-stampa(2 > 1 > 1)
+zahl heißt -> "Iretiola"
+ausgabe(heißt)
+ausgabe 5 > 1
+ausgabe(2 > 1 > 1)
