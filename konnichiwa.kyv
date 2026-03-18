@@ -1,6 +1,4 @@
 use japanese
 
-
-shutsuryoku("hallo")
-hensuu namae -> "Iretiola"
+hensuu namae -> "Iretiola-san"
 shutsuryoku(namae)
