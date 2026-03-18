@@ -148,7 +148,7 @@ Planned features include:
 - More built-in functions
 - Expanded multi-language support
 - Improved error handling
-- String support (*currently Kyvera only supports numbers*)
+- Expanded string support (*currently Kyvera supports minimal string functions*)
 
 ---
 
