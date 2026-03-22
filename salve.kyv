@@ -1,7 +1,0 @@
-use italian
-
-variabile num_1 -> 7
-variabile num_2 -> 10
-
-variabile sum -> (num_1 + num_2)
-stampa(sum)
