@@ -2,8 +2,10 @@ from .ast import NumberNode, StringNode, BinOpNode, VarAccessNode
 
 
 class Interpreter:
-    def __init__(self):
+    def __init__(self, language=None):
         self.variables = {}
+        # Language pack for booleans
+        self.language = language or {"TRUE": "True", "FALSE": "False"}
 
     def interpret(self, program_node):
         for statement in program_node.statements:
@@ -54,11 +56,11 @@ class Interpreter:
 
         # Binary operations
         if isinstance(node, BinOpNode):
-            left = self.evaluate(node.left)
+            left = self.evaluate(node.left) if node.left else None
             right = self.evaluate(node.right)
 
             if node.operator == "+":
-                return left + right
+                return str(left) + str(right)
             elif node.operator == "-":
                 return left - right
             elif node.operator == "*":
@@ -79,5 +81,13 @@ class Interpreter:
                 return left <= right
             elif node.operator == "and":
                 return left and right
+            elif node.operator == "or":
+                return left or right
+            elif node.operator == "not":
+                return not right
+
+        # Booleans: map to current language
+        if isinstance(node, bool):
+            return self.language["TRUE"] if node else self.language["FALSE"]
 
         raise Exception(f"Cannot evaluate node: {type(node).__name__}")

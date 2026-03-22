@@ -1,4 +1,6 @@
 use japanese
 
-hensuu namae -> "Iretiola-san"
-shutsuryoku(namae)
+hensuu namae -> "Iretiola"
+shutsuryoku("Hello, " + namae)
+
+shutsuryoku(5 > 10 or 2 < 3)
