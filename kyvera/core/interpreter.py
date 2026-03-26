@@ -79,5 +79,7 @@ class Interpreter:
                 return left <= right
             elif node.operator == "and":
                 return left and right
+            elif node.operator == "or":
+                return left or right
 
         raise Exception(f"Cannot evaluate node: {type(node).__name__}")

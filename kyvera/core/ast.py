@@ -41,3 +41,9 @@ class IfNode:
         self.condition = condition
         self.body = body
         self.else_body = else_body
+
+
+class UnaryOpNode:
+    def __init(self, operator, node):
+        self.operator = operator
+        self.node = node

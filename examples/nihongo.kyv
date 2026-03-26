@@ -1,0 +1,9 @@
+use japanese
+
+hensuu namae -> "Iretiola"
+shutsuryoku(namae)
+hensuu sai -> 20
+shutsuryoku(sai)
+shutsuryoku(namae + "-san, konnichiwa!")
+
+# concatenation yet to be added here
