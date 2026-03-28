@@ -1,6 +1,5 @@
 import re
 
-
 class Lexer:
     def __init__(self, code, keywords):
         self.code = code
@@ -31,7 +30,7 @@ class Lexer:
             line = raw_line.strip()
 
             # Token pattern that correctly captures strings
-            token_pattern = r'"[^"]*"|\d+|==|!=|>=|<=|->|>|<|\(|\)|:|[A-Za-z_]\w*'
+            token_pattern = r'"[^"]*"|\d+|==|!=|>=|<=|->|\+|\-|\*|\/|>|<|\(|\)|:|,|[A-Za-z_]\w*'
 
             parts = re.findall(token_pattern, line)
 

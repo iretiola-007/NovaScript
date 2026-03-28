@@ -1,0 +1,5 @@
+use german
+
+ausgabe("hello world!")
+zahl heißt -> "Iretiola"
+ausgabe("Hello, " + heißt + "!")
