@@ -4,7 +4,6 @@ from .ast import NumberNode, StringNode, BinOpNode, VarAccessNode
 class Interpreter:
     def __init__(self, language=None):
         self.variables = {}
-        # Language pack for booleans
         self.language = language or {"TRUE": "True", "FALSE": "False"}
 
     def interpret(self, program_node):
@@ -59,36 +58,38 @@ class Interpreter:
             left = self.evaluate(node.left) if node.left else None
             right = self.evaluate(node.right)
 
-            if node.operator == "+":
-                return str(left) + str(right)
-            elif node.operator == "-":
-                return left - right
-            elif node.operator == "*":
-                return left * right
-            elif node.operator == "/":
-                return left / right
-            elif node.operator == ">":
-                return left > right
-            elif node.operator == "<":
-                return left < right
-            elif node.operator == "==":
-                return left == right
-            elif node.operator == "!=":
-                return left != right
-            elif node.operator == ">=":
-                return left >= right
-            elif node.operator == "<=":
-                return left <= right
-            elif node.operator == "and":
-                return left and right
-            elif node.operator == "or":
-                return left or right
+            # 🔥 Support BOTH .operator and .op (merge conflict safe)
+            op = getattr(node, "operator", getattr(node, "op", None))
 
-        # Booleans: map to current language
+            if op == "+":
+                return str(left) + str(right)
+            elif op == "-":
+                return left - right
+            elif op == "*":
+                return left * right
+            elif op == "/":
+                return left / right
+            elif op == ">":
+                return left > right
+            elif op == "<":
+                return left < right
+            elif op == "==":
+                return left == right
+            elif op == "!=":
+                return left != right
+            elif op == ">=":
+                return left >= right
+            elif op == "<=":
+                return left <= right
+            elif op == "and":
+                return left and right
+            elif op == "or":
+                return left or right
+            elif op == "not":
+                return not right
+
+        # Boolean translation (for language packs later)
         if isinstance(node, bool):
             return self.language["TRUE"] if node else self.language["FALSE"]
 
         raise Exception(f"Cannot evaluate node: {type(node).__name__}")
-
-        raise Exception(f"Cannot evaluate node: {type(node).__name__}")
-
