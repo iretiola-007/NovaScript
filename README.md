@@ -34,7 +34,7 @@ The goal of Kyvera is to provide a simple, flexible, and extensible language tha
 ### Setup
 Clone the repository:
 ```
-git clone https://github.com/Kyvera/kyvera.git
+git clone https://github.com/iretiola-007/kyvera.git
 cd kyvera
 ```
 
